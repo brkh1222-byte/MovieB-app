@@ -76,7 +76,7 @@ export const MovieCards = () => {
                   <div className="flex mt-3 pl-3">
                     <img src="Star.png" />
                     <div className="flex">
-                      <p>{movie.vote_average}</p>
+                      <p>{movie.vote_average?.toFixed(1)}</p>
                       <p>/10</p>
                     </div>
                   </div>

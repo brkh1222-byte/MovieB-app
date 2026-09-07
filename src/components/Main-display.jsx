@@ -51,7 +51,7 @@ export const MainDisplay = () => {
                 alt={mov.original_title}
                 className="w-full h-full absolute object-cover z-0"
               />
-              <div className="relative w-full h-237.5 overflow-hidden">
+              <div className="relative w-full h-237.5">
                 <div className="w-101 absolute z-10 top-62.5 left-55 flex flex-col gap-7">
                   <div className="flex flex-col items-start">
                     <h3 className="text-[20px] text-white">Now Playing:</h3>

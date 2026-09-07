@@ -1,13 +1,17 @@
+"use client";
+
 import { Film, Mail } from "lucide-react";
 import { Phone } from "lucide-react";
+import { useRouter } from "next/navigation";
 export const Footer = () => {
+  const router = useRouter();
   return (
     <div className="bg-[#302886] h-[350px] w-full mt-[51px] px-30 py-15">
       <div className="w-full  h-full flex justify-between gap-50 text-white text-[18px]">
-        <div className="h-full w-[550px]  flex flex-col gap-[20px] justify-items-start items-start">
+        <div className="h-full w-[550px]  flex flex-col gap-5 justify-items-start items-start">
           <div
             onClick={() => router.push(`/`)}
-            className="flex gap-1.5 text-[20px] items-center"
+            className="flex gap-1.5 text-[20px] items-center hover:cursor-pointer"
           >
             <Film />
             <div>Movie B</div>
@@ -30,7 +34,7 @@ export const Footer = () => {
               <Phone />
               <div className="flex flex-col">
                 <p>Phone:</p>
-                <p>(+976)-99216966</p>
+                <p>(+976)-9921****</p>
               </div>
             </div>
           </div>

@@ -61,7 +61,7 @@ export const MovieCards2 = () => {
             return (
               <div
                 key={movie.id}
-                className="w-full flex flex-col text-black h-50"
+                className="w-full flex flex-col text-black"
                 onClick={() => router.push(`/movie/${movie.id}`)}
               >
                 <div className="overflow-hidden rounded-md">
@@ -75,7 +75,7 @@ export const MovieCards2 = () => {
                   <div className="flex mt-3 pl-3">
                     <img src="Star.png" />
                     <div className="flex">
-                      <p>{movie.vote_average}</p>
+                      <p>{movie.vote_average?.toFixed(1)}</p>
                       <p>/10</p>
                     </div>
                   </div>

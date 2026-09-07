@@ -7,8 +7,8 @@ import { useRouter } from "next/navigation";
 export const NavigationBar = () => {
   const router = useRouter();
   return (
-    <div className="h-[80px] flex items-center">
-      <div className="w-screen flex items-center h-[80px]  justify-between px-20 hover:cursor-pointer">
+    <div className="h-20 flex items-center">
+      <div className="w-screen flex items-center h-20  justify-between px-20 hover:cursor-pointer">
         <div
           onClick={() => router.push(`/`)}
           className="flex gap-1.5 text-[20px] items-center"
