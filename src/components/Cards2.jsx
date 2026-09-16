@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { ArrowRight } from "lucide-react";
 import LoadingComponent from "./LoadingComponent";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 // const Categories = [
 //   { title: "Upcoming", endpoint: "upcoming" },
@@ -18,8 +19,7 @@ export const MovieCards2 = () => {
     method: "GET",
     headers: {
       accept: "application/json",
-      Authorization:
-        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2YWRhNWNkYWM5NzVjODNiMjIyMWE0YzE4ZjJmMmU3NiIsIm5iZiI6MTc4ODMxNDY4Ny41MTAwMDAyLCJzdWIiOiI2YTk3ODQzZjVkYjIxMTc0NjZiZWFhNjYiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.PZ5ywChp18M3fCrN935Dq_DG-xbrhfqe8-PtZzZVd-0",
+      Authorization: "Bearer " + process.env.NEXT_PUBLIC_TMDB_API_KEY,
     },
   };
   const [movies, setMovies] = useState([]);
@@ -49,7 +49,9 @@ export const MovieCards2 = () => {
         <div className="h-full  flex justify-between">
           <h1 className="font-semibold text-4xl">Popular</h1>
           <div className="flex items-center gap-2.5 pr-5">
-            <p className="text-[20px]">See more</p>
+            <Link className="text-[20px]" href="/movie/popular">
+              See more
+            </Link>
             <ArrowRight />
           </div>
         </div>

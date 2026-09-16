@@ -1,7 +1,7 @@
 "use client";
 import { ArrowRight } from "lucide-react";
 import { useRouter } from "next/navigation";
-
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 const SimilarMovies = ({ id }) => {
@@ -11,8 +11,7 @@ const SimilarMovies = ({ id }) => {
     method: "GET",
     headers: {
       accept: "application/json",
-      Authorization:
-        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2YWRhNWNkYWM5NzVjODNiMjIyMWE0YzE4ZjJmMmU3NiIsIm5iZiI6MTc4ODMxNDY4Ny41MTAwMDAyLCJzdWIiOiI2YTk3ODQzZjVkYjIxMTc0NjZiZWFhNjYiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.PZ5ywChp18M3fCrN935Dq_DG-xbrhfqe8-PtZzZVd-0",
+      Authorization: "Bearer " + process.env.NEXT_PUBLIC_TMDB_API_KEY,
     },
   };
   useEffect(() => {
@@ -41,7 +40,9 @@ const SimilarMovies = ({ id }) => {
         <div className="h-full  flex justify-between">
           <h1 className="font-bold text-4xl">More like this</h1>
           <div className="flex items-center gap-2.5">
-            <p className="text-[20px]">See more</p>
+            <Link className="text-[20px]" href={`/movie/${id}/similar`}>
+              See more
+            </Link>
             <ArrowRight />
           </div>
         </div>

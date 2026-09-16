@@ -4,44 +4,73 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { ChevronRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import Link from "next/link";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuGroup,
-  DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-const genres = [
-  "Action",
-  "Adventure",
-  "Animation",
-  "Biography",
-  "Comedy",
-  "Crime",
-  "Documentary",
-  "Drama",
-  "Family",
-  "Fantasy",
-  "Film-Noir",
-  "Game-Show",
-  "History",
-  "Horror",
-  "Music",
-  "Musical",
-  "Mystery",
-  "News",
-  "Reality-TV",
-  "Romance",
-  "Sci-Fi",
-  "Short",
-  "Sport",
-  "Talk-Show",
-  "Thriller",
-  "War",
-  "Western",
-];
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+// const genres = [
+//   "Action",
+//   "Adventure",
+//   "Animation",
+//   "Biography",
+//   "Comedy",
+//   "Crime",
+//   "Documentary",
+//   "Drama",
+//   "Family",
+//   "Fantasy",
+//   "Film-Noir",
+//   "Game-Show",
+//   "History",
+//   "Horror",
+//   "Music",
+//   "Musical",
+//   "Mystery",
+//   "News",
+//   "Reality-TV",
+//   "Romance",
+//   "Sci-Fi",
+//   "Short",
+//   "Sport",
+//   "Talk-Show",
+//   "Thriller",
+//   "War",
+//   "Western",
+// ];
 export function GenreMenuFunction() {
+  const router = useRouter();
+  const [genres, setGenres] = useState([]);
+  const options = {
+    method: "GET",
+    headers: {
+      accept: "application/json",
+      Authorization: "Bearer " + process.env.NEXT_PUBLIC_TMDB_API_KEY,
+    },
+  };
+  useEffect(() => {
+    const fetchGenre = async () => {
+      try {
+        const genresRes = await fetch(
+          "https://api.themoviedb.org/3/genre/movie/list?language=en",
+          options,
+        );
+        const genresData = await genresRes.json();
+
+        setGenres(genresData.genres);
+        console.log(genresData, "genresData");
+        console.log(genres, "genres");
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchGenre();
+  }, []);
   return (
     <DropdownMenu>
       <DropdownMenuTrigger
@@ -56,7 +85,9 @@ export function GenreMenuFunction() {
         <DropdownMenuGroup>
           <DropdownMenuLabel>
             <div className="flex flex-col text-black gap-1 pb-4">
-              <h1 className="font-semibold text-[25px]">Genres</h1>
+              <Link href={`/genre`} className="font-semibold text-[25px]">
+                Genres
+              </Link>
               <p className="text-[17px]">See lists of movies by genre</p>
             </div>
           </DropdownMenuLabel>
@@ -66,10 +97,12 @@ export function GenreMenuFunction() {
           {genres.map((genre) => {
             return (
               <Badge
+                key={genre.id}
                 variant="outline"
                 className="font-semibold text-[15px] hover:cursor-pointer"
+                onClick={() => router.push(`/genre/${genre.id}`)}
               >
-                {genre} <ChevronRight />
+                {genre.name} <ChevronRight />
               </Badge>
             );
           })}

@@ -2,17 +2,18 @@
 
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import { Play } from "lucide-react";
 
-const MovieTitleDetail = () => {
+const MovieTitleDetail = ({ trailerData }) => {
   const params = useParams();
   const movieId = params.id;
   const [movie, setMovie] = useState({});
+  const [isTrailerOpen, setIsTrailerOpen] = useState(false);
   const options = {
     method: "GET",
     headers: {
       accept: "application/json",
-      Authorization:
-        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2YWRhNWNkYWM5NzVjODNiMjIyMWE0YzE4ZjJmMmU3NiIsIm5iZiI6MTc4ODMxNDY4Ny41MTAwMDAyLCJzdWIiOiI2YTk3ODQzZjVkYjIxMTc0NjZiZWFhNjYiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.PZ5ywChp18M3fCrN935Dq_DG-xbrhfqe8-PtZzZVd-0",
+      Authorization: "Bearer " + process.env.NEXT_PUBLIC_TMDB_API_KEY,
     },
   };
 
@@ -43,6 +44,20 @@ const MovieTitleDetail = () => {
   const formatVoteCount = (votes) => {
     const k = (votes / 1000).toFixed(1);
     return `${k}k`;
+  };
+
+  const trailer =
+    trailerData?.results?.find(
+      (video) => video.site === "YouTube" && video.type === "Trailer",
+    ) || trailerData?.results?.find((video) => video.site === "YouTube");
+
+  const trailerUrl = trailer?.key
+    ? `https://www.youtube.com/embed/${trailer.key}?autoplay=1&rel=0`
+    : null;
+
+  const handleClick = () => {
+    if (!trailerUrl) return;
+    setIsTrailerOpen(true);
   };
 
   return (
@@ -80,16 +95,56 @@ const MovieTitleDetail = () => {
           </div>
         </div>
       </div>
-      <div className="flex justify-between w-full h-[700px] mt-10">
+      <div className="flex justify-between w-full h-[700px] mt-10 gap-10">
         <img
           src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
           alt="Poster image"
         />
-        <img
-          src={`https://image.tmdb.org/t/p/original${movie.backdrop_path}`}
-          alt="Backdrop image"
-        />
+        <div className="relative h-full">
+          <img
+            src={`https://image.tmdb.org/t/p/original${movie.backdrop_path}`}
+            alt="Backdrop image"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute flex items-center gap-5 bottom-10 left-10 ">
+            <div
+              onClick={handleClick}
+              className="rounded-full bg-white flex justify-center items-center h-11 w-11 hover:bg-slate-300 cursor-pointer"
+            >
+              <Play className="w-5" />
+            </div>
+            <p className="text-white text-[20px]">Play trailer</p>
+          </div>
+        </div>
       </div>
+
+      {isTrailerOpen && trailerUrl && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80"
+          onClick={() => setIsTrailerOpen(false)}
+        >
+          <div
+            className="relative w-[90vw] max-w-5xl overflow-hidden rounded-2xl bg-black"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => setIsTrailerOpen(false)}
+              className="absolute right-3 top-3 z-10 rounded-full bg-black/60 px-3 py-1 text-sm text-white"
+            >
+              ✕
+            </button>
+            <div className="aspect-video w-full">
+              <iframe
+                className="h-full w-full"
+                src={trailerUrl}
+                title="Movie trailer"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

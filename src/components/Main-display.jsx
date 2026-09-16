@@ -17,8 +17,7 @@ export const MainDisplay = () => {
     method: "GET",
     headers: {
       accept: "application/json",
-      Authorization:
-        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2YWRhNWNkYWM5NzVjODNiMjIyMWE0YzE4ZjJmMmU3NiIsIm5iZiI6MTc4ODMxNDY4Ny41MTAwMDAyLCJzdWIiOiI2YTk3ODQzZjVkYjIxMTc0NjZiZWFhNjYiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.PZ5ywChp18M3fCrN935Dq_DG-xbrhfqe8-PtZzZVd-0",
+      Authorization: "Bearer " + process.env.NEXT_PUBLIC_TMDB_API_KEY,
     },
   };
   useEffect(() => {
@@ -41,7 +40,7 @@ export const MainDisplay = () => {
   return loading ? (
     <LoadingComponent />
   ) : (
-    <Carousel className="w-full mt-5">
+    <Carousel className="w-full">
       <CarouselContent>
         {movie.map((mov) => {
           return (
@@ -74,7 +73,7 @@ export const MainDisplay = () => {
                     </p>
                   </div>
                   <div className="mt-5">
-                    <button className="flex bg-white text-black rounded-md  h-15 w-[200px] justify-center items-center gap-2 hover:bg-gray-300">
+                    <button className="flex bg-white text-black rounded-md  h-15 w-50 justify-center items-center gap-2 hover:bg-gray-300">
                       <Play />
                       <p>Watch Trailer</p>
                     </button>
