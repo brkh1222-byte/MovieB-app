@@ -18,7 +18,7 @@ export const NavigationBar = () => {
     }
   };
   return (
-    <div className="h-20 flex items-center bg-[#f7f7f7]">
+    <div className="h-20 flex items-center">
       <div className="w-screen flex items-center h-20  justify-between px-20 hover:cursor-pointer">
         <div
           onClick={() => router.push(`/`)}
