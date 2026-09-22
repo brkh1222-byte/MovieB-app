@@ -4,11 +4,11 @@ import { NavigationBar } from "@/components/Navigation-bar";
 import { Separator } from "@/components/ui/separator";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { ChevronRight } from "lucide-react";
 
-const Page = () => {
+const SearchContent = () => {
   const searchParams = useSearchParams();
   const query = searchParams.get("q");
   const router = useRouter();
@@ -201,4 +201,10 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default function Page() {
+  return (
+    <Suspense fallback={<div>Loading search...</div>}>
+      <SearchContent />
+    </Suspense>
+  );
+}
